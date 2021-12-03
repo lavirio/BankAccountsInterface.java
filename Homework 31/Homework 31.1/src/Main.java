@@ -14,7 +14,6 @@ public class Main {
             }
         }
 
-
     public static Double sumDigits() {
         System.out.println("Введите число:");
         return new Scanner(System.in).nextDouble();
