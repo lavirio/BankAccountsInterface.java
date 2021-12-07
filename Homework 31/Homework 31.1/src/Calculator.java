@@ -1,3 +1,4 @@
+import java.util.Scanner;
 
 public class Calculator {
     private Double number1;
@@ -12,6 +13,17 @@ public class Calculator {
         } else {
             this.number1 = number1;
             this.number2 = number2;
+        }
+    }
+
+    public static Double sumDigits() throws noneDigitsException {
+        String number;
+        System.out.println("Введите число:");
+        number = new Scanner(System.in).nextLine();
+        if (number.matches("-?\\d+")){
+            return Double.parseDouble(number);
+        } else {
+            throw new noneDigitsException("Заданное значение не являются числом!");
         }
     }
 
@@ -33,18 +45,18 @@ public class Calculator {
 
 
     public void sum() {
-        System.out.println(number1 + number2);
+        System.out.println("Сумма: " + (number1 + number2));
     }
 
     public void subtraction() {
-        System.out.println(number1 - number2);
+        System.out.println("Разность: " + (number1 - number2));
     }
 
     public void multiplication() {
-        System.out.println(number1 * number2);
+        System.out.println("Произведение: " + number1 * number2);
     }
 
     public void division() {
-        System.out.println(number1 / number2);
+        System.out.println("Деление: " + number1 / number2);
     }
 }
