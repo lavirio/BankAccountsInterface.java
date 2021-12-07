@@ -4,6 +4,7 @@ public class Calculator {
     private Double number2;
 
     public Calculator(Double number1, Double number2) throws Exception {
+
         if (number1 < 0 && number2 < 0) {
             throw new negativeDigitsException("Заданные значения меньше нуля!");
         } else if (number1.equals(number2)) {
@@ -35,7 +36,7 @@ public class Calculator {
         System.out.println(number1 + number2);
     }
 
-    public  void subtraction() {
+    public void subtraction() {
         System.out.println(number1 - number2);
     }
 
