@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Appenders>
+        <File name="ErrorFile" fileName="logs/error.txt">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <Filters>
+                <MarkerFilter marker="ErrorInfo"/>
+            </Filters>
+        </File>
+        <File name="InputFile" fileName="logs/inputInfo.txt">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <Filters>
+                <MarkerFilter marker="InputInfo"/>
+            </Filters>
+        </File>
+        <File name="StartFile" fileName="logs/startInfo.txt">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <Filters>
+                <MarkerFilter marker="StartInfo"/>
+            </Filters>
+        </File>
+    </Appenders>
+    <Loggers>
+        <Root level="info">
+            <appender-ref ref="ErrorFile"/>
+            <appender-ref ref="InputFile"/>
+            <appender-ref ref="StartFile"/>
+        </Root>
+    </Loggers>
+</Configuration>
