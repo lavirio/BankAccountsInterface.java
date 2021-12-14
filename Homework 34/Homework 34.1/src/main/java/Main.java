@@ -23,25 +23,21 @@ public class Main {
         }
     }
     public static void transferFolderToSufficientSize(long byteSize, String path){
+        DecimalFormat decimalFormat = new DecimalFormat("##0.00");
         if (byteSize < Math.pow(2,10)){
             double bitSize = byteSize / 8.0;
-            DecimalFormat decimalFormat = new DecimalFormat("##0.00");
             System.out.println("Размер папки " + path + " составляет " + decimalFormat.format(bitSize) + " байт");
         } else if (byteSize >= Math.pow(2,10) && byteSize < Math.pow(2,20)){
             double kiloByte = byteSize / Math.pow(2,10);
-            DecimalFormat decimalFormat = new DecimalFormat("##0.00");
             System.out.println("Размер папки " + path + " составляет " + decimalFormat.format(kiloByte) + " Кб");
         } else if (byteSize >= Math.pow(2,20) && byteSize < Math.pow(2,30)){
             double megaByte = byteSize / Math.pow(2,20);
-            DecimalFormat decimalFormat = new DecimalFormat("##0.00");
             System.out.println("Размер папки " + path + " составляет " + decimalFormat.format(megaByte) + " Мб");
         } else if (byteSize >= Math.pow(2,30) && byteSize < Math.pow(2,40)){
             double gigaByte = (byteSize / Math.pow(2, 30));
-            DecimalFormat decimalFormat = new DecimalFormat("##0.00");
             System.out.println("Размер папки " + path + " составляет " + decimalFormat.format(gigaByte) + " Гб");
         } else if (byteSize >= Math.pow(2,40) && byteSize < Math.pow(2,50)){
             double teraByte = byteSize / Math.pow(2,40);
-            DecimalFormat decimalFormat = new DecimalFormat("##0.00");
             System.out.println("Размер папки " + path + " составляет " + decimalFormat.format(teraByte) + " Тб");
         } else {
             System.out.println("Объем не распознан!");
