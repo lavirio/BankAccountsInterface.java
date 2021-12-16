@@ -1,20 +1,24 @@
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
+
+        PetList petList = new PetList();
         Pet pet = new Pet("Барсик", "кошка", 3);
-        Human human = new Human("Петр",18,'м',67.5,183.3);
-        System.out.println(pet);
-        System.out.println(human);
-        System.out.println();
         Pet pet1 = new Pet("Васька", "собака", 5);
         Pet pet2 = new Pet("Саня", "лемур", 2);
 
-        PetList petList = new PetList();
         petList.addPets(pet);
         petList.addPets(pet1);
         petList.addPets(pet2);
+
+        Human human = new Human("Петр",18,'м',67.5,183.3, List.of(petList));
+        System.out.println(pet);
+        System.out.println(human);
+        System.out.println();
 
         Gson gson = new GsonBuilder().create();
 
@@ -25,7 +29,7 @@ public class Main {
         System.out.println();
 
         Gson gson1 = new GsonBuilder().setPrettyPrinting().create();
-        String petsJson = gson1.toJson(petList);
-        System.out.println(petsJson);
+        String petsListJson = gson1.toJson(petList);
+        System.out.println(petsListJson);
     }
 }
