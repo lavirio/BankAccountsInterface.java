@@ -15,7 +15,18 @@ public class Human {
     private char gender;
    transient private double weight;
     private double height;
-    private List <PetList> petLists = new ArrayList<>();
+    private List <Pet> petLists = new ArrayList<>();
 
+    public Human(String name, int age, char gender, double weight, double height) {
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.weight = weight;
+        this.height = height;
+    }
+
+    public void addPetToHuman(Pet pet){
+        petLists.add(pet);
+    }
 }
 
