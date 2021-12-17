@@ -1,14 +1,12 @@
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-       PetList petList = new PetList();
+        PetList petList = new PetList();
         Human human = new Human("Петр", 18, 'м', 67.5, 183.3);
-
+        System.out.println(human);
         Pet pet = new Pet("Барсик", "кошка", 3);
         Pet pet1 = new Pet("Васька", "собака", 5);
         Pet pet2 = new Pet("Саня", "лемур", 2);
@@ -20,11 +18,11 @@ public class Main {
         petList.addPets(pet1);
         petList.addPets(pet2);
 
-        System.out.println(pet);
         System.out.println(human);
+        System.out.println(pet);
         System.out.println();
 
-        Gson gson = new GsonBuilder().create();
+        Gson gson = new GsonBuilder().registerTypeAdapter(PetList.class,new PetListSerializer()).registerTypeAdapter(Pet.class, new PetSerializer()).registerTypeAdapter(Human.class, new HumanSerializer()).create();
 
         String humanJson = gson.toJson(human);
         String petJson = gson.toJson(pet);
@@ -32,9 +30,13 @@ public class Main {
         System.out.println(petJson);
         System.out.println();
 
-        Gson gson1 = new GsonBuilder().setPrettyPrinting().create();
-        String petsJson = gson1.toJson(petList);
-        System.out.println(petsJson);
+        Gson gson2 = new GsonBuilder().setPrettyPrinting().create();
+        String petListJson = gson2.toJson(petList);
+        Gson gson1 = new GsonBuilder().registerTypeAdapter(PetList.class, new PetListSerializer()).registerTypeAdapter(Pet.class, new PetSerializer()).setPrettyPrinting().create();
+        String petListJson1 = gson1.toJson(petList);
+
+        System.out.println(petListJson);
+        System.out.println(petListJson1);
 
     }
 }

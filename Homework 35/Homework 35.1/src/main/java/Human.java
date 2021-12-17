@@ -13,7 +13,7 @@ public class Human {
     private String name;
     private int age;
     private char gender;
-   transient private double weight;
+   private double weight;
     private double height;
     private List <Pet> petLists = new ArrayList<>();
 
