@@ -24,15 +24,12 @@ public class SubwayLine {
         this.color = color;
     }
 
-    private int count = 0;
-
     public void addStationToLine(SubwayStation station){
         if (!stations.contains(station)){
-            count++;
         stations.add(station);}
     }
 
     public int stationCount(){
-        return count;
+       return stations.size();
     }
 }

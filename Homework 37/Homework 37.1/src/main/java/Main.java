@@ -77,7 +77,10 @@ public class Main {
             Elements rows = table.select("tr");
 
             rows.stream().skip(1).forEach(element -> {
+                final Elements span = element.select("td").get(3).select("span");
+                final List<String> titles = span.size() != 0 ? span.stream().map(currentSpan -> currentSpan.attr("title")).filter(title -> !title.isEmpty()).collect(Collectors.toList()) : Collections.singletonList("Нет прехода!");
                 SubwayStation subwayStation = new SubwayStation(getNameFromString(element.select("a").text()), getLineNumberFromString(element.select("span.sortkey").text()));
+                subwayStation.addConnections(titles.toString());
                 SubwayLine subwayLine = new SubwayLine(element.select("span").attr("title"), getLineNumberFromString(element.select("span.sortkey").text()), getColorIdFromString(element.select("td").attr("style")));
                 List<String> linesId = lines.stream().map(SubwayLine::getLineId).collect(Collectors.toList());
                 if (!linesId.contains(subwayLine.getLineId())) {
@@ -90,7 +93,15 @@ public class Main {
                     }
                 }));
             });
-            lines.forEach(subwayLine -> System.out.println("Линия " + subwayLine.getLineId() + " - " + subwayLine.getLineName() + " - " + subwayLine.stationCount() + " станции - " + subwayLine.getColor()));
+            lines.forEach(subwayLine -> {
+                        System.out.println("Линия " + subwayLine.getLineId() + " - " + subwayLine.getLineName() + " - " + subwayLine.getStations() + " станции - " + subwayLine.getColor());
+//                        int connectionCount = 0;
+//                        for (int i = 0; i < subwayLine.getStations().size(); i++) {
+//                            connectionCount = subwayLine.getStations().get(i).getConnections().get(0).split(",").length;
+//                            System.out.println(subwayLine.getStations().get(i).getStationName() + " " + connectionCount);
+//                        }
+                    }
+            );
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
