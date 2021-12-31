@@ -6,7 +6,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.IOException;
+import java.io.File;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -16,27 +16,29 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class Main {
-
-    private static Document downloadPageFromWebsite() throws IOException {
-        String url = "https://ru.wikipedia.org/wiki/Список_станций_Московского_метрополитена";
-        String html = Jsoup.parse(new URL(url), 0).html();
-        List<String> website = new ArrayList<>();
-        website.add(html);
-        Files.write(Paths.get("src/Data/Wikipedia.html"), website);
-        return Jsoup.parse("src/Data/Wikipedia.html");
-    }
-
     private static final Pattern stationName = Pattern.compile("((\\W+\\s)?)\\W+");
     private static final Pattern colorName = Pattern.compile("#\\w+");
     private static final Pattern lineNumber = Pattern.compile("^\\S+");
+    private static final String filePath = "src/Data/Wikipedia.html";
 
-    private static Document downloadPage() throws Exception {
+    private static List<String> downloadPageFromWebsite() throws Exception {
         String url = "https://ru.wikipedia.org/wiki/Список_станций_Московского_метрополитена";
-        Document page = Jsoup.parse(new URL(url), 0);
-        if (page.hasText()) {
-            return page;
+        String html = Jsoup.parse(new URL(url), 0).html();
+        if (html.isEmpty()) {
+            throw new LoadException("Can't download page from website!");
         }
-        throw new LoadException("Can't download page from website!");
+        List<String> website = new ArrayList<>();
+        website.add(html);
+        return website;
+    }
+
+    private static Document getDocumentFromComputer(List<String> website) throws Exception {
+        Files.write(Paths.get(filePath), website);
+        File htmlFile = new File(filePath);
+        if (htmlFile.isFile()) {
+            return Jsoup.parse(htmlFile, "UTF-8");
+        }
+        throw new ReadFileException("Can't read file from computer");
     }
 
     private static String getNameFromString(String stringName) {
@@ -56,7 +58,7 @@ public class Main {
     }
 
     private static String getLineNumberFromString(String lineNumberString) {
-        String number = lineNumberString.replaceAll("^0", "").replaceAll("[A-я]+","");
+        String number = lineNumberString.replaceAll("^0", "").replaceAll("[A-я]+", "");
         Matcher matcher = lineNumber.matcher(number);
         if (matcher.find()) {
             return matcher.group();
@@ -68,8 +70,8 @@ public class Main {
         try {
             List<SubwayLine> lines = new ArrayList<>();
             List<SubwayStation> stations = new ArrayList<>();
-            downloadPageFromWebsite();
-            Document document = downloadPage();
+
+            Document document = getDocumentFromComputer(downloadPageFromWebsite());
 
             Element table = document.select("table").get(2);
             Elements rows = table.select("tr");
