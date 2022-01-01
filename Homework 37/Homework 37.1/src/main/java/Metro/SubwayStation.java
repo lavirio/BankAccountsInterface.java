@@ -17,19 +17,18 @@ public class SubwayStation {
 
     List<String> connections = new ArrayList<>();
 
-    public SubwayStation(String stationName, String lineId) {
-        this.stationName = stationName;
-        this.lineId = lineId;
-    }
 
-    public void addConnections(String connection){
-        if (!connections.contains(connection)) {
-            connections.add(connection);
-        }
-    }
-
-    public int connectionCount(){
+    public int connectionCount() {
         return connections.size();
+    }
+
+    @Override
+    public String toString() {
+        return "SubwayStation{" +
+                "stationName=" + stationName +
+                ", lineId=" + lineId  +
+                ", connections=" + (connections.size() > 0 ? connections : "Нет перехода!")  +
+                '}';
     }
 }
 
